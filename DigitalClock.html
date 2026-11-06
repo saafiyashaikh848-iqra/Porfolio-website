@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TimeGlow | Digital Clock</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #101d2e, #173c48);
+  color: white;
+  transition: .3s;
+}
+
+.clock-card {
+  width: min(90%, 520px);
+  padding: 45px 25px;
+  text-align: center;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 25px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  color: #65dfc2;
+  font-size: 15px;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+}
+
+#greeting {
+  font-size: 18px;
+  color: #c5d7dc;
+  margin-bottom: 15px;
+}
+
+#time {
+  font-size: clamp(48px, 12vw, 75px);
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #75f0d0;
+  text-shadow: 0 0 25px rgba(117,240,208,.3);
+}
+
+#ampm {
+  font-size: 18px;
+  color: #d8e8e8;
+}
+
+#day {
+  margin-top: 22px;
+  font-size: 21px;
+}
+
+#date {
+  margin-top: 8px;
+  color: #b6cbd0;
+  font-size: 15px;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,.15);
+  margin: 28px 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 25px;
+  background: #65dfc2;
+  color: #102d32;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background: #a1ffe8;
+}
+
+#mode-btn {
+  background: #f0d28a;
+  color: #30260f;
+}
+
+footer {
+  margin-top: 30px;
+  color: #9fb7bd;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+body.light {
+  background: linear-gradient(135deg, #e8f4f1, #b7d8d2);
+  color: #183c3c;
+}
+
+body.light .clock-card {
+  background: rgba(255,255,255,.75);
+  border-color: rgba(20,70,70,.15);
+}
+
+body.light #greeting,
+body.light #ampm,
+body.light #date,
+body.light footer {
+  color: #587472;
+}
+
+body.light #time {
+  color: #087e75;
+  text-shadow: none;
+}
+
+body.light #day {
+  color: #183c3c;
+}
+
+body.light .divider {
+  background: rgba(20,70,70,.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="clock-card">
+
+  <div class="logo">TIMEGLOW</div>
+
+  <p id="greeting">Welcome!</p>
+
+  <div>
+    <span id="time">00:00:00</span>
+    <span id="ampm">AM</span>
+  </div>
+
+  <h2 id="day">Monday</h2>
+  <p id="date">Loading date...</p>
+
+  <div class="divider"></div>
+
+  <div class="controls">
+    <button id="format-btn" onclick="toggleFormat()">
+      Switch to 24H
+    </button>
+
+    <button id="mode-btn" onclick="toggleTheme()">
+      Light Mode
+    </button>
+  </div>
+
+  <footer>MADE WITH HTML · CSS · JAVASCRIPT</footer>
+
+</div>
+
+<script>
+let is24Hour = false;
+
+function updateClock() {
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+
+  let ampm = hours >= 12 ? "PM" : "AM";
+
+  let displayHours = hours;
+
+  if (!is24Hour) {
+    displayHours = hours % 12 || 12;
+  }
+
+  displayHours = String(displayHours).padStart(2, "0");
+
+  document.getElementById("time").textContent =
+    `${displayHours}:${minutes}:${seconds}`;
+
+  document.getElementById("ampm").textContent =
+    is24Hour ? "" : ampm;
+
+  const days = [
+    "Sunday", "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday"
+  ];
+
+  const months = [
+    "January", "February", "March", "April",
+    "May", "June", "July", "August",
+    "September", "October", "November", "December"
+  ];
+
+  document.getElementById("day").textContent =
+    days[now.getDay()];
+
+  document.getElementById("date").textContent =
+    `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+  let greeting = "Good Evening";
+
+  if (hours < 12) {
+    greeting = "Good Morning";
+  } else if (hours < 17) {
+    greeting = "Good Afternoon";
+  }
+
+  document.getElementById("greeting").textContent =
+    greeting + "!";
+}
+
+function toggleFormat() {
+  is24Hour = !is24Hour;
+
+  document.getElementById("format-btn").textContent =
+    is24Hour ? "Switch to 12H" : "Switch to 24H";
+
+  updateClock();
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("light");
+
+  const lightMode =
+    document.body.classList.contains("light");
+
+  document.getElementById("mode-btn").textContent =
+    lightMode ? "Dark Mode" : "Light Mode";
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>

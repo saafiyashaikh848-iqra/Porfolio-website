@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreamFlix | Movie Streaming</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #101010;
+  color: white;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 6%;
+  background: #101010;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 28px;
+  color: #e50914;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+nav {
+  display: flex;
+  gap: 22px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #e50914;
+}
+
+.search {
+  width: 190px;
+  padding: 10px;
+  border: 1px solid #555;
+  background: #202020;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+}
+
+.hero {
+  min-height: 490px;
+  padding: 100px 7%;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, #101010 5%, rgba(16,16,16,.75) 48%, transparent),
+    linear-gradient(0deg, #101010, transparent 60%),
+    url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1600")
+    center/cover;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+.tag {
+  color: #ff555d;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 6vw, 65px);
+  margin: 15px 0;
+}
+
+.hero p {
+  color: #ddd;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.btn {
+  padding: 13px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.play {
+  background: #e50914;
+  color: white;
+}
+
+.more {
+  background: #444;
+  color: white;
+}
+
+.section {
+  padding: 35px 6%;
+}
+
+.section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.filter-btn {
+  background: #292929;
+  border: 1px solid #555;
+  color: white;
+  padding: 9px 17px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #e50914;
+  border-color: #e50914;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  background: #202020;
+  border-radius: 9px;
+  overflow: hidden;
+  transition: .3s;
+}
+
+.movie-card:hover {
+  transform: scale(1.04);
+}
+
+.poster {
+  height: 245px;
+  background-size: cover;
+  background-position: center;
+}
+
+.movie-info {
+  padding: 13px;
+}
+
+.movie-info h3 {
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+
+.movie-info p {
+  color: #aaa;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.watch-btn {
+  width: 100%;
+  padding: 9px;
+  background: #e50914;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.empty {
+  display: none;
+  color: #aaa;
+  padding: 20px 0;
+}
+
+footer {
+  background: #080808;
+  color: #888;
+  text-align: center;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  z-index: 20;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #242424;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+@media(max-width: 650px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .search {
+    width: 130px;
+  }
+
+  .hero {
+    min-height: 400px;
+    padding: 65px 6%;
+  }
+
+  .poster {
+    height: 210px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">STREAMFLIX</div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#movies">Movies</a>
+    <a href="#trending">Trending</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <input class="search" id="search"
+    type="text" placeholder="Search movies...">
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="tag">STREAMFLIX ORIGINAL</div>
+    <h1>Stories That Stay With You.</h1>
+    <p>
+      Discover exciting movies, unforgettable stories
+      and amazing entertainment. Your next favourite
+      movie is waiting here.
+    </p>
+
+    <button class="btn play" onclick="openModal('Featured Collection')">
+      ▶ Explore Now
+    </button>
+
+    <button class="btn more"
+      onclick="document.getElementById('movies').scrollIntoView({behavior:'smooth'})">
+      More Info
+    </button>
+  </div>
+</section>
+
+<section class="section" id="movies">
+  <h2>Explore Movies</h2>
+
+  <div class="filters">
+    <button class="filter-btn active" data-category="All">All</button>
+    <button class="filter-btn" data-category="Action">Action</button>
+    <button class="filter-btn" data-category="Drama">Drama</button>
+    <button class="filter-btn" data-category="Comedy">Comedy</button>
+    <button class="filter-btn" data-category="Adventure">Adventure</button>
+  </div>
+
+  <div class="movie-grid" id="movie-grid">
+
+    <div class="movie-card" data-name="The Dark Knight" data-category="Action">
+      <div class="poster" style="background-image:url('https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=600')"></div>
+      <div class="movie-info">
+        <h3>The Dark Knight</h3>
+        <p>Action · 2008 · ★ 9.0</p>
+        <button class="watch-btn" onclick="openModal('The Dark Knight')">Watch Trailer</button>
+      </div>
+    </div>
+
+    <div class="movie-card" data-name="The Notebook" data-category="Drama">
+      <div class="poster" style="background-image:url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600')"></div>
+      <div class="movie-info">
+        <h3>The Notebook</h3>
+        <p>Drama · 2004 · ★ 7.8</p>
+        <button class="watch-btn" onclick="openModal('The Notebook')">Watch Trailer</button>
+      </div>
+    </div>
+
+    <div class="movie-card" data-name="Jungle Adventure" data-category="Adventure">
+      <div class="poster" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=600')"></div>
+      <div class="movie-info">
+        <h3>Jungle Adventure</h3>
+        <p>Adventure · 2025 · ★ 8.2</p>
+        <button class="watch-btn" onclick="openModal('Jungle Adventure')">Watch Trailer</button>
+      </div>
+    </div>
+
+    <div class="movie-card" data-name="Funny Days" data-category="Comedy">
+      <div class="poster" style="background-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600')"></div>
+      <div class="movie-info">
+        <h3>Funny Days</h3>
+        <p>Comedy · 2025 · ★ 7.5</p>
+        <button class="watch-btn" onclick="openModal('Funny Days')">Watch Trailer</button>
+      </div>
+    </div>
+
+    <div class="movie-card" data-name="The Mountain" data-category="Adventure">
+      <div class="poster" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600')"></div>
+      <div class="movie-info">
+        <h3>The Mountain</h3>
+        <p>Adventure · 2024 · ★ 8.4</p>
+        <button class="watch-btn" onclick="openModal('The Mountain')">Watch Trailer</button>
+      </div>
+    </div>
+
+    <div class="movie-card" data-name="City Lights" data-category="Drama">
+      <div class="poster" style="background-image:url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=600')"></div>
+      <div class="movie-info">
+        <h3>City Lights</h3>
+        <p>Drama · 2024 · ★ 8.1</p>
+        <button class="watch-btn" onclick="openModal('City Lights')">Watch Trailer</button>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="empty" id="empty">No movies found. Try another search.</p>
+</section>
+
+<section class="section" id="trending">
+  <h2>Trending Now 🔥</h2>
+  <p style="color:#aaa">
+    Explore our collection of popular movie cards.
+  </p>
+</section>
+
+<section class="section" id="about">
+  <h2>About StreamFlix</h2>
+  <p style="color:#aaa;line-height:1.8">
+    StreamFlix is a student-created streaming platform
+    interface built using HTML, CSS and JavaScript.
+    This project demonstrates responsive design,
+    movie search and category filtering.
+  </p>
+</section>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2 id="modal-title">Movie</h2>
+    <p style="color:#bbb;margin:20px 0">
+      This is a demo trailer interaction.
+      Actual movie playback is not available.
+    </p>
+    <button class="btn play" onclick="closeModal()">Got it</button>
+  </div>
+</div>
+
+<footer>
+  <h3 style="color:#e50914">STREAMFLIX</h3>
+  <p>Discover. Watch. Enjoy.</p>
+  <p>Student Practice Project | Built with HTML, CSS & JavaScript</p>
+</footer>
+
+<script>
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".movie-card");
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+let selectedCategory = "All";
+
+function filterMovies() {
+  const query = search.value.toLowerCase();
+  let count = 0;
+
+  cards.forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    const category = card.dataset.category;
+
+    const matchesName = name.includes(query);
+    const matchesCategory =
+      selectedCategory === "All" ||
+      category === selectedCategory;
+
+    const visible = matchesName && matchesCategory;
+
+    card.style.display = visible ? "block" : "none";
+
+    if (visible) count++;
+  });
+
+  document.getElementById("empty").style.display =
+    count === 0 ? "block" : "none";
+}
+
+search.addEventListener("input", filterMovies);
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+
+    selectedCategory = button.dataset.category;
+    filterMovies();
+  });
+});
+
+function openModal(movieName) {
+  document.getElementById("modal-title").textContent = movieName;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+document.getElementById("modal").addEventListener("click", event => {
+  if (event.target.id === "modal") closeModal();
+});
+</script>
+
+</body>
+</html>

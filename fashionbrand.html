@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VÉLORA | Fashion & Clothing</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #faf7f2;
+    color: #33251f;
+}
+
+header {
+    background: #fffdf9;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 12px #0000000b;
+}
+
+.logo {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+nav a {
+    text-decoration: none;
+    color: #49352c;
+    margin-left: 25px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #ad7655;
+}
+
+.hero {
+    min-height: 570px;
+    padding: 70px 8%;
+    display: flex;
+    align-items: center;
+    background:
+    linear-gradient(90deg, #251a16dd, #251a1640),
+    url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=85");
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero-content {
+    max-width: 550px;
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(42px, 7vw, 68px);
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    background: #b17c5c;
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #82563e;
+    transform: translateY(-2px);
+}
+
+section {
+    padding: 75px 8%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.section-heading p {
+    color: #806e63;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.product-card {
+    background: white;
+    padding-bottom: 22px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 25px #00000012;
+}
+
+.product-card img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    margin: 18px 0 8px;
+    font-family: Georgia, serif;
+    font-size: 21px;
+}
+
+.price {
+    color: #a16b4b;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.product-card button {
+    background: #3c2b23;
+    color: white;
+    padding: 11px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-card button:hover {
+    background: #a16b4b;
+}
+
+.promo {
+    background: #e9ded2;
+    text-align: center;
+}
+
+.promo h2 {
+    font-family: Georgia, serif;
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.promo p {
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 45px;
+}
+
+.about img {
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+}
+
+.about h2 {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    line-height: 1.9;
+    color: #705e53;
+}
+
+.testimonial {
+    background: #fffdf9;
+    text-align: center;
+}
+
+.testimonial blockquote {
+    max-width: 650px;
+    margin: auto;
+    font-family: Georgia, serif;
+    font-size: 24px;
+    line-height: 1.7;
+}
+
+.contact {
+    text-align: center;
+}
+
+.contact p {
+    margin: 12px 0 25px;
+    color: #705e53;
+}
+
+footer {
+    background: #33251f;
+    color: white;
+    text-align: center;
+    padding: 28px 15px;
+}
+
+footer p {
+    font-size: 13px;
+    line-height: 2;
+    color: #e6d8cf;
+}
+
+#cart-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #33251f;
+    color: white;
+    padding: 15px 22px;
+    display: none;
+    z-index: 20;
+}
+
+@media (max-width: 800px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav a {
+        margin: 0 7px;
+        font-size: 12px;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .product-card img {
+        height: 380px;
+    }
+
+    section {
+        padding: 55px 6%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">VÉLORA.</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#collection">Collection</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Wear Your Confidence.</h1>
+        <p>
+            Discover fashion that reflects your personality.
+            Explore timeless styles, modern outfits and
+            everyday elegance with VÉLORA.
+        </p>
+        <a href="#collection" class="btn">EXPLORE COLLECTION</a>
+    </div>
+</section>
+
+<section id="collection">
+    <div class="section-heading">
+        <h2>Our Collection</h2>
+        <p>Find your style. Make your statement.</p>
+    </div>
+
+    <div class="products">
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=85" alt="Women's elegant fashion outfit">
+            <h3>Elegant Dresses</h3>
+            <p class="price">From ₹1,499</p>
+            <button onclick="addToCart('Elegant Dresses')">Explore Now</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=85" alt="Fashion clothing collection">
+            <h3>Casual Wear</h3>
+            <p class="price">From ₹899</p>
+            <button onclick="addToCart('Casual Wear')">Explore Now</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=800&q=85" alt="Stylish fashion outfit">
+            <h3>Modern Styles</h3>
+            <p class="price">From ₹1,199</p>
+            <button onclick="addToCart('Modern Styles')">Explore Now</button>
+        </div>
+
+    </div>
+</section>
+
+<section class="promo">
+    <h2>Style That Speaks.</h2>
+    <p>
+        Your wardrobe deserves something special.<br>
+        Discover your next favourite look with VÉLORA.
+    </p>
+    <a href="#collection" class="btn">DISCOVER MORE</a>
+</section>
+
+<section class="about" id="about">
+    <img
+    src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=85"
+    alt="Fashion clothing on display">
+
+    <div>
+        <h2>More Than Just Fashion</h2>
+        <p>
+            At VÉLORA, we believe fashion is a way to express
+            who you are. Our vision is to bring together
+            confidence, comfort and contemporary style.
+            Every look tells a story, and we want yours
+            to be unforgettable.
+        </p>
+    </div>
+</section>
+
+<section class="testimonial">
+    <div class="section-heading">
+        <h2>What Makes Us Special?</h2>
+    </div>
+
+    <blockquote>
+        "Fashion is not just about what you wear.
+        It's about how you feel when you wear it."
+    </blockquote>
+    <p style="margin-top:20px;">— The VÉLORA Philosophy</p>
+</section>
+
+<section class="contact" id="contact">
+    <div class="section-heading">
+        <h2>Let's Connect</h2>
+        <p>Follow our journey and discover new styles.</p>
+    </div>
+
+    <p>Instagram: @velora.fashion</p>
+    <p>Email: hello@velora.example</p>
+    <a href="mailto:hello@velora.example" class="btn">CONTACT US</a>
+</section>
+
+<footer>
+    <div class="logo">VÉLORA.</div>
+    <p>Fashion is an attitude. Wear it with confidence.</p>
+    <p>© 2026 VÉLORA. Demo brand website.</p>
+</footer>
+
+<div id="cart-message"></div>
+
+<script>
+function addToCart(productName) {
+    const message = document.getElementById("cart-message");
+
+    message.textContent = productName + " selected! This is a demo.";
+    message.style.display = "block";
+
+    setTimeout(function() {
+        message.style.display = "none";
+    }, 2500);
+}
+</script>
+
+</body>
+</html>
